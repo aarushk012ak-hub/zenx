@@ -1,0 +1,46 @@
+[
+  {
+    "id": "member-1",
+    "name": "Arjun Varma",
+    "role": "Founder & Managing Director",
+    "badge": "Core Leadership",
+    "sport": "Football & Sports Tech",
+    "bio": "National-level athlete turned sports entrepreneur. Spearheading the grassroots and corporate sporting revolution in Hyderabad.",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    "instagram": "zenx.hyd",
+    "experience": "8+ Years in Event Ops"
+  },
+  {
+    "id": "member-2",
+    "name": "Sneha Reddy",
+    "role": "Head of Tournament Operations",
+    "badge": "Operations Lead",
+    "sport": "Badminton & Box Cricket",
+    "bio": "Specializes in high-intensity bracket design, venue logistics, and player hospitality across Hyderabads elite sports arenas.",
+    "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+    "instagram": "zenx.hyd",
+    "experience": "50+ Tournaments Executed"
+  },
+  {
+    "id": "member-3",
+    "name": "Karthik Iyer",
+    "role": "Chief Referee & Technical Director",
+    "badge": "Officiating Lead",
+    "sport": "Football & Futsal",
+    "bio": "AIFF certified referee ensuring fair play, high competitive standards, and spotless tournament arbitration.",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    "instagram": "zenx.hyd",
+    "experience": "AIFF Certified"
+  },
+  {
+    "id": "member-4",
+    "name": "Rohan Mehta",
+    "role": "Media & Creative Director",
+    "badge": "Creative Lead",
+    "sport": "Snooker & Sports Media",
+    "bio": "Captures the heart-pounding action, cinematic reels, and tournament hype that puts ZenX athletes in the spotlight.",
+    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    "instagram": "zenx.hyd",
+    "experience": "Cinematography & Brand"
+  }
+]

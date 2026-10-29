@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZenX Hyderabad | Elite Sports Tournaments & Leagues</title>
+  <meta name="description" content="ZenX Hyderabad - Compete. Connect. Conquer. Elite sports experience in Hyderabad: Football, Cricket, Badminton, Snooker & more." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lime: {
+              400: '#a3e635',
+              300: '#bef264',
+              500: '#84cc16',
+            },
+            dark: {
+              950: '#070908',
+              900: '#0d1210',
+              850: '#121815',
+              800: '#1a221e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="cyber-grid bg-[#070908] text-slate-100 min-h-screen selection:bg-lime-400 selection:text-black">
+
+  <!-- Studio Mode Top Admin Banner (Visible when unlocked) -->
+  <div id="studio-top-banner" class="hidden bg-lime-400 text-black py-2.5 px-4 sticky top-0 z-50 shadow-[0_4px_25px_rgba(163,230,53,0.5)] border-b-2 border-black">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-bold">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-black animate-ping"></span>
+        <span class="font-mono font-black uppercase tracking-wider">⚡ STUDIO EDITING ACTIVE</span>
+        <span class="hidden md:inline font-normal text-slate-900">• You can now edit tournaments, frontend content & manage registrations</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="window.zenxStudio.openFrontendEditor()" class="px-2.5 py-1 rounded-lg bg-black text-white hover:bg-slate-800 transition font-bold text-[11px] flex items-center gap-1">
+          <span>✏️ Edit Content</span>
+        </button>
+        <button onclick="window.zenxStudio.openLiveMatchModal()" class="px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-500 text-white transition font-bold text-[11px] flex items-center gap-1 shadow-sm">
+          <span>🔴 Live Score</span>
+        </button>
+        <button onclick="window.zenxStudio.openEventEditor()" class="px-2.5 py-1 rounded-lg bg-black text-white hover:bg-slate-800 transition font-bold text-[11px] flex items-center gap-1">
+          <span>➕ Add Tournament</span>
+        </button>
+        <button onclick="window.zenxStudio.openRegistrationsModal()" class="px-2.5 py-1 rounded-lg bg-black text-white hover:bg-slate-800 transition font-bold text-[11px] flex items-center gap-1">
+          <span>📋 Registrations</span>
+        </button>
+        <button onclick="window.zenxStudio.lockStudio()" class="px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white transition font-bold text-[11px] flex items-center gap-1">
+          <span>🔒 Lock Studio</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- Announcement Marquee -->
+  <div class="bg-black/90 border-b border-lime-500/20 py-2 overflow-hidden whitespace-nowrap text-xs font-semibold text-lime-400 uppercase tracking-widest flex items-center">
+    <div class="animate-marquee flex items-center gap-8">
+      <span>⚡ STAY CONNECTED. BIG THINGS ARE COMING.</span>
+      <span class="text-white/60">•</span>
+      <span>HYDERABAD'S PREMIER SPORTS MOVEMENT</span>
+      <span class="text-white/60">•</span>
+      <span>FOOTBALL • CRICKET • BADMINTON • SNOOKER</span>
+      <span class="text-white/60">•</span>
+      <span>COMPETE. CONNECT. CONQUER.</span>
+      <span class="text-white/60">•</span>
+      <span>ELITE SPORTS EXPERIENCES ACROSS HYDERABAD</span>
+      <span class="text-white/60">•</span>
+      <span>⚡ ZENX.HYD LEAGUES • TOURNAMENTS • EVENTS</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-[#070908]/90 backdrop-blur-xl border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo & Brand -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-lime-400/80 group-hover:border-lime-300 group-hover:shadow-[0_0_20px_rgba(163,230,53,0.5)] transition duration-300 bg-black">
+          <img src="assets/images/zenx-logo.png" alt="ZenX Logo" class="w-full h-full object-contain p-0.5" />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-black tracking-wider text-white font-heading group-hover:text-lime-300 transition">
+            ZEN<span class="text-lime-400">X</span>
+          </span>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1">
+            Hyderabad
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide text-slate-300">
+        <a href="#tournaments" class="hover:text-lime-400 transition">Tournaments</a>
+        <a href="#movement" class="hover:text-lime-400 transition">Movement</a>
+        <a href="#sports" class="hover:text-lime-400 transition">Sports</a>
+        <a href="#people" class="hover:text-lime-400 transition">People</a>
+        <a href="#venues" class="hover:text-lime-400 transition">Venues</a>
+        <a href="#contact" class="hover:text-lime-400 transition">Contact</a>
+      </nav>
+
+      <!-- Action Button: Register -->
+      <div class="flex items-center gap-3">
+        <!-- Register CTA -->
+        <a 
+          href="#tournaments" 
+          class="px-6 py-2.5 rounded-xl text-xs font-extrabold tracking-wide uppercase bg-lime-400 hover:bg-lime-300 text-black neon-glow-btn flex items-center gap-2 shadow-[0_0_20px_rgba(163,230,53,0.4)]">
+          <span>Register Team</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- LIVE TOURNAMENT MATCH / SCORE TICKER (Controlled dynamically via Studio)  -->
+  <!-- ========================================================================= -->
+  <div id="live-match-ticker" class="w-full bg-gradient-to-r from-red-950/90 via-black to-red-950/90 border-b border-red-500/40 py-2.5 px-4 hidden transition-all duration-300 relative z-30 shadow-[0_4px_20px_rgba(239,68,68,0.2)]">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center flex-wrap gap-2.5 sm:gap-3.5">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/30 border border-red-500 text-red-400 font-extrabold uppercase tracking-widest text-[10px] animate-pulse">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span>LIVE MATCH</span>
+        </span>
+        <span id="live-match-title" class="font-bold text-white tracking-wide">
+          🏏 ZenX Box Cricket Championship: Hyderabad Strikers vs Deccan Warriors
+        </span>
+        <span class="text-slate-500 hidden sm:inline">•</span>
+        <span id="live-match-score" class="font-mono font-bold text-lime-400 bg-black/70 px-2.5 py-0.5 rounded border border-lime-500/30">
+          54/2 (4.3 ov) • Target 88
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a id="live-match-link" href="https://cricheroes.in" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+          <span>Watch Live / Scores</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section (Centered ZenX Movement Showcase) -->
+  <section class="relative pt-16 pb-24 overflow-hidden">
+    <!-- Ambient Glow Backdrops -->
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-lime-500/15 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-lime-400/20 rounded-full blur-[90px] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+      
+      <!-- Top Pill Badge -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-lime-950/80 border border-lime-400/50 text-lime-300 text-xs font-bold tracking-widest uppercase mb-8 shadow-[0_0_20px_rgba(163,230,53,0.2)]">
+        <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+        <span>Hyderabad's Premier Sports Movement</span>
+        <span class="text-white/40">•</span>
+        <span class="text-white font-mono">@zenx.hyd</span>
+      </div>
+
+      <!-- CENTERPIECE: ZenX Emblem in the Middle (Clean, no poster background) -->
+      <div class="relative my-4 flex items-center justify-center group">
+        <!-- Outer Glowing Pulse Rings -->
+        <div class="absolute -inset-4 rounded-full bg-gradient-to-r from-lime-500/30 via-lime-400/40 to-lime-300/30 blur-xl opacity-75 group-hover:opacity-100 transition duration-700 animate-pulse"></div>
+        <div class="absolute -inset-1 rounded-full border border-lime-400/40 scale-110 opacity-40 animate-spin" style="animation-duration: 25s;"></div>
+
+        <!-- The Clean Circular ZenX Logo -->
+        <div class="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-4 border-lime-400 shadow-[0_0_50px_rgba(163,230,53,0.5)] bg-black flex items-center justify-center transform group-hover:scale-105 transition duration-500">
+          <img 
+            src="assets/images/zenx-logo.png" 
+            alt="ZenX Hyderabad" 
+            class="w-full h-full object-contain p-1" 
+          />
+        </div>
+      </div>
+
+      <!-- Centered Hero Copy -->
+      <div class="space-y-4 max-w-3xl mt-6">
+        <p class="text-xs sm:text-sm font-extrabold tracking-[0.3em] text-slate-400 uppercase font-mono">
+          More Than Tournaments.
+        </p>
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.05] font-heading">
+          A <span class="neon-text-gradient underline decoration-lime-400/40">MOVEMENT.</span>
+        </h1>
+        <p class="text-base sm:text-xl font-medium text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          High-stakes sports leagues, electronic scoring, corporate battles, and floodlit tournaments across Hyderabad.
+          <span class="text-lime-300 font-bold block mt-1 tracking-wide">COMPETE. CONNECT. CONQUER.</span>
+        </p>
+      </div>
+
+      <!-- Centered Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-6">
+        <a 
+          href="#tournaments" 
+          class="px-8 py-4 rounded-xl text-sm font-extrabold tracking-wide uppercase bg-lime-400 hover:bg-lime-300 text-black neon-glow-btn flex items-center gap-2.5 shadow-[0_0_25px_rgba(163,230,53,0.4)]">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+          <span>Explore Upcoming Events</span>
+        </a>
+
+        <a 
+          href="#contact" 
+          class="px-7 py-4 rounded-xl text-sm font-bold tracking-wide border border-slate-700 hover:border-lime-400 bg-slate-900/90 hover:text-lime-300 text-slate-300 transition flex items-center gap-2.5 shadow-lg">
+          <svg class="w-4 h-4 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          <span>Contact Organizers</span>
+        </a>
+      </div>
+
+      <!-- Centered Stats Grid -->
+      <div class="mt-12 pt-10 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-4xl">
+        <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
+          <div id="stat-active-tournaments" class="text-2xl sm:text-3xl font-black text-white font-heading">5+</div>
+          <div class="text-xs text-slate-400 font-medium mt-0.5">Active Tournaments</div>
+        </div>
+        <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
+          <div class="text-2xl sm:text-3xl font-black text-lime-400 font-heading">355+</div>
+          <div class="text-xs text-slate-400 font-medium mt-0.5">Athletes & Teams</div>
+        </div>
+        <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
+          <div id="stat-total-prize" class="text-2xl sm:text-3xl font-black text-white font-heading">₹1.5L+</div>
+          <div class="text-xs text-slate-400 font-medium mt-0.5">Cash Prize Pool</div>
+        </div>
+        <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
+          <div class="text-2xl sm:text-3xl font-black text-lime-400 font-heading">12+</div>
+          <div class="text-xs text-slate-400 font-medium mt-0.5">Hyderabad Venues</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Brand Pillars (Community, Competition, Growth, Passion) -->
+  <section id="movement" class="py-20 bg-[#090d0b] border-y border-slate-800/80 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="text-xs font-bold uppercase tracking-widest text-lime-400">The ZenX Philosophy</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white font-heading">
+          Built For The Passionate. Driven By Sport.
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+          ZenX is not just an event management company. We are creating Hyderabad's most connected sporting ecosystem where weekend athletes play like professionals.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Pillar 1 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-lime-400/50 transition duration-300 flex flex-col group">
+          <div class="w-12 h-12 rounded-xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-lime-400 mb-5 group-hover:bg-lime-400 group-hover:text-black transition">
+            <!-- Users icon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Community</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Uniting players, teams, and fans across Hyderabad into an active network of sports lovers who play weekly.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-lime-400/50 transition duration-300 flex flex-col group">
+          <div class="w-12 h-12 rounded-xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-lime-400 mb-5 group-hover:bg-lime-400 group-hover:text-black transition">
+            <!-- Trophy icon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Competition</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            High-caliber tournament formats, electronic scoring, certified referees, and genuine cash prizes.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-lime-400/50 transition duration-300 flex flex-col group">
+          <div class="w-12 h-12 rounded-xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-lime-400 mb-5 group-hover:bg-lime-400 group-hover:text-black transition">
+            <!-- Target/Growth icon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Growth</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Showcase your skills on digital broadcasts, win player awards, and rise through the city rankings.
+          </p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-lime-400/50 transition duration-300 flex flex-col group">
+          <div class="w-12 h-12 rounded-xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-lime-400 mb-5 group-hover:bg-lime-400 group-hover:text-black transition">
+            <!-- Zap/Passion icon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Passion</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Energy under stadium lights. Cinematic video coverage, high-tempo music, and unmatched sportsmanship.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sports Categories Showcase -->
+  <section id="sports" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-lime-400">Disciplines</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-heading mt-1">
+            Core Sports We Champion
+          </h2>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm max-w-md">
+          Every sport at ZenX adheres to official federation rules, top-grade equipment, and certified turf venues.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Football -->
+        <div class="relative group rounded-2xl overflow-hidden border border-slate-800 hover:border-lime-400 transition h-84 flex flex-col justify-between p-6">
+          <img 
+            src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" 
+            alt="Football" 
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500" 
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/30"></div>
+          
+          <!-- Top Row: Badge & Sport Logo -->
+          <div class="relative z-10 flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-full bg-lime-400 text-black text-[10px] font-extrabold uppercase tracking-wide">5v5 & 7v7</span>
+            <!-- Football Logo Badge -->
+            <div class="w-10 h-10 rounded-full bg-black/80 border-2 border-lime-400/80 shadow-[0_0_15px_rgba(163,230,53,0.5)] flex items-center justify-center text-xl" title="Football">
+              ⚽
+            </div>
+          </div>
+
+          <div class="relative z-10 space-y-2 pt-16">
+            <h3 class="text-2xl font-bold text-white font-heading flex items-center gap-2">
+              <span>Football</span>
+            </h3>
+            <p class="text-xs text-slate-300">FIFA approved turf, floodlights, official referees & full video highlights.</p>
+          </div>
+        </div>
+
+        <!-- Cricket -->
+        <div class="relative group rounded-2xl overflow-hidden border border-slate-800 hover:border-lime-400 transition h-84 flex flex-col justify-between p-6">
+          <img 
+            src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80" 
+            alt="Cricket" 
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500" 
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/30"></div>
+          
+          <!-- Top Row: Badge & Sport Logo -->
+          <div class="relative z-10 flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-full bg-lime-400 text-black text-[10px] font-extrabold uppercase tracking-wide">Box & Turf</span>
+            <!-- Cricket Logo Badge -->
+            <div class="w-10 h-10 rounded-full bg-black/80 border-2 border-lime-400/80 shadow-[0_0_15px_rgba(163,230,53,0.5)] flex items-center justify-center text-xl" title="Cricket">
+              🏏
+            </div>
+          </div>
+
+          <div class="relative z-10 space-y-2 pt-16">
+            <h3 class="text-2xl font-bold text-white font-heading flex items-center gap-2">
+              <span>Cricket</span>
+            </h3>
+            <p class="text-xs text-slate-300">Overarm/underarm fast-paced matches with live CricHeroes scoring.</p>
+          </div>
+        </div>
+
+        <!-- Badminton -->
+        <div class="relative group rounded-2xl overflow-hidden border border-slate-800 hover:border-lime-400 transition h-84 flex flex-col justify-between p-6">
+          <img 
+            src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=800&q=80" 
+            alt="Badminton" 
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500" 
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/30"></div>
+          
+          <!-- Top Row: Badge & Sport Logo -->
+          <div class="relative z-10 flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-full bg-lime-400 text-black text-[10px] font-extrabold uppercase tracking-wide">Singles & Doubles</span>
+            <!-- Badminton Logo Badge -->
+            <div class="w-10 h-10 rounded-full bg-black/80 border-2 border-lime-400/80 shadow-[0_0_15px_rgba(163,230,53,0.5)] flex items-center justify-center text-xl" title="Badminton">
+              🏸
+            </div>
+          </div>
+
+          <div class="relative z-10 space-y-2 pt-16">
+            <h3 class="text-2xl font-bold text-white font-heading flex items-center gap-2">
+              <span>Badminton</span>
+            </h3>
+            <p class="text-xs text-slate-300">Yonex feather shuttles, synthetic wooden courts, certified state umpires.</p>
+          </div>
+        </div>
+
+        <!-- Snooker (Photo Kept As Requested + Logo Added) -->
+        <div class="relative group rounded-2xl overflow-hidden border border-slate-800 hover:border-lime-400 transition h-84 flex flex-col justify-between p-6">
+          <img 
+            src="https://images.unsplash.com/photo-1588731234150-1361405e3f16?auto=format&fit=crop&w=800&q=80" 
+            alt="Snooker" 
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500" 
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/30"></div>
+          
+          <!-- Top Row: Badge & Sport Logo -->
+          <div class="relative z-10 flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-full bg-lime-400 text-black text-[10px] font-extrabold uppercase tracking-wide">8-Ball & Snooker</span>
+            <!-- Snooker 8-Ball Logo Badge -->
+            <div class="w-10 h-10 rounded-full bg-black/80 border-2 border-lime-400/80 shadow-[0_0_15px_rgba(163,230,53,0.5)] flex items-center justify-center text-xl" title="Snooker">
+              🎱
+            </div>
+          </div>
+
+          <div class="relative z-10 space-y-2 pt-16">
+            <h3 class="text-2xl font-bold text-white font-heading flex items-center gap-2">
+              <span>Snooker</span>
+            </h3>
+            <p class="text-xs text-slate-300">Strachan cloth tables, high break cash rewards, premium lounge atmosphere.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Tournaments & Events Section -->
+  <section id="tournaments" class="py-20 bg-[#090d0b] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-400/30 text-lime-400 text-xs font-bold uppercase tracking-wider mb-2">
+            <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+            Live Hyderabad Tournaments
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white font-heading">
+            Upcoming Events
+          </h2>
+        </div>
+
+        <div class="text-xs text-slate-400 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-lime-400"></span>
+          <span>Verified Venues • Official Referees • Cash Prizes</span>
+        </div>
+      </div>
+
+      <!-- Filters & Live Search Bar -->
+      <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-10">
+        <!-- Sport Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button data-sport="All" class="sport-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-lime-400 text-black shadow-[0_0_15px_rgba(163,230,53,0.4)]">
+            All Sports
+          </button>
+          <button data-sport="Football" class="sport-filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+            Football
+          </button>
+          <button data-sport="Cricket" class="sport-filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+            Cricket
+          </button>
+          <button data-sport="Badminton" class="sport-filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+            Badminton
+          </button>
+          <button data-sport="Snooker" class="sport-filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+            Snooker
+          </button>
+          <button data-sport="Pickleball" class="sport-filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+            Padel & Pickleball
+          </button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative w-full md:w-72">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <input 
+            type="text" 
+            id="tournament-search"
+            placeholder="Search venue, title, sport..." 
+            class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-lime-400 focus:ring-1 focus:ring-lime-400 transition"
+          />
+        </div>
+      </div>
+
+      <!-- Tournaments Grid (Populated via js/app.js) -->
+      <div id="tournaments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Empty State -->
+      <div id="tournaments-empty" class="hidden text-center py-16 bg-[#0c120f] rounded-2xl border border-slate-800 p-8 space-y-3">
+        <div class="w-12 h-12 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-slate-400">
+          <i data-lucide="calendar-x" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white">No Tournaments Match Your Filter</h3>
+        <p class="text-xs text-slate-400 max-w-sm mx-auto">Try selecting another sport or clear your search query to see other upcoming events in Hyderabad.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- People & Leadership Section ("ppl info and stuff") -->
+  <section id="people" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <span class="text-xs font-bold uppercase tracking-widest text-lime-400">The Powerhouse</span>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white font-heading">
+          Meet The People Behind ZenX
+        </h2>
+        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+          From tournament directors and certified referees to media cinematographers—meet the dedicated sports specialists curating every Hyderabad showdown.
+        </p>
+      </div>
+
+      <!-- Team Grid (Populated via js/app.js with immediate static fallback) -->
+      <div id="team-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Arjun Varma -->
+        <div class="group bg-[#0e1412] rounded-2xl border border-slate-800 hover:border-lime-500/40 p-6 flex flex-col items-center text-center transition duration-300 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)]">
+          <div class="relative w-24 h-24 mb-4">
+            <div class="absolute inset-0 rounded-full bg-lime-400/20 blur-md group-hover:bg-lime-400/40 transition"></div>
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Arjun Varma" class="relative w-full h-full object-cover rounded-full border-2 border-lime-400 shadow-md" loading="lazy" />
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-lime-950/60 text-lime-400 border border-lime-500/30 mb-2">Core Leadership</span>
+          <h4 class="text-lg font-bold text-white">Arjun Varma</h4>
+          <p class="text-xs font-semibold text-slate-400 mb-2">Founder & Managing Director</p>
+          <p class="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">National-level athlete turned sports entrepreneur. Spearheading the grassroots and corporate sporting revolution in Hyderabad.</p>
+          <div class="mt-auto pt-3 w-full border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span class="font-medium text-slate-300">Football & Sports Tech</span>
+            <a href="https://instagram.com/zenx.hyd" target="_blank" class="hover:text-lime-400 transition flex items-center gap-1">
+              <span>@zenx.hyd</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Sneha Reddy -->
+        <div class="group bg-[#0e1412] rounded-2xl border border-slate-800 hover:border-lime-500/40 p-6 flex flex-col items-center text-center transition duration-300 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)]">
+          <div class="relative w-24 h-24 mb-4">
+            <div class="absolute inset-0 rounded-full bg-lime-400/20 blur-md group-hover:bg-lime-400/40 transition"></div>
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Sneha Reddy" class="relative w-full h-full object-cover rounded-full border-2 border-lime-400 shadow-md" loading="lazy" />
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-lime-950/60 text-lime-400 border border-lime-500/30 mb-2">Operations Lead</span>
+          <h4 class="text-lg font-bold text-white">Sneha Reddy</h4>
+          <p class="text-xs font-semibold text-slate-400 mb-2">Head of Tournament Operations</p>
+          <p class="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">Specializes in high-intensity bracket design, venue logistics, and player hospitality across Hyderabad's elite sports arenas.</p>
+          <div class="mt-auto pt-3 w-full border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span class="font-medium text-slate-300">Badminton & Box Cricket</span>
+            <a href="https://instagram.com/zenx.hyd" target="_blank" class="hover:text-lime-400 transition flex items-center gap-1">
+              <span>@zenx.hyd</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Karthik Iyer -->
+        <div class="group bg-[#0e1412] rounded-2xl border border-slate-800 hover:border-lime-500/40 p-6 flex flex-col items-center text-center transition duration-300 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)]">
+          <div class="relative w-24 h-24 mb-4">
+            <div class="absolute inset-0 rounded-full bg-lime-400/20 blur-md group-hover:bg-lime-400/40 transition"></div>
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" alt="Karthik Iyer" class="relative w-full h-full object-cover rounded-full border-2 border-lime-400 shadow-md" loading="lazy" />
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-lime-950/60 text-lime-400 border border-lime-500/30 mb-2">Officiating Lead</span>
+          <h4 class="text-lg font-bold text-white">Karthik Iyer</h4>
+          <p class="text-xs font-semibold text-slate-400 mb-2">Chief Referee & Technical Director</p>
+          <p class="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">AIFF certified referee ensuring fair play, high competitive standards, and spotless tournament arbitration.</p>
+          <div class="mt-auto pt-3 w-full border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span class="font-medium text-slate-300">Football & Futsal</span>
+            <a href="https://instagram.com/zenx.hyd" target="_blank" class="hover:text-lime-400 transition flex items-center gap-1">
+              <span>@zenx.hyd</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Rohan Mehta -->
+        <div class="group bg-[#0e1412] rounded-2xl border border-slate-800 hover:border-lime-500/40 p-6 flex flex-col items-center text-center transition duration-300 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)]">
+          <div class="relative w-24 h-24 mb-4">
+            <div class="absolute inset-0 rounded-full bg-lime-400/20 blur-md group-hover:bg-lime-400/40 transition"></div>
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" alt="Rohan Mehta" class="relative w-full h-full object-cover rounded-full border-2 border-lime-400 shadow-md" loading="lazy" />
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-lime-950/60 text-lime-400 border border-lime-500/30 mb-2">Creative Lead</span>
+          <h4 class="text-lg font-bold text-white">Rohan Mehta</h4>
+          <p class="text-xs font-semibold text-slate-400 mb-2">Media & Creative Director</p>
+          <p class="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">Captures the heart-pounding action, cinematic reels, and tournament hype that puts ZenX athletes in the spotlight.</p>
+          <div class="mt-auto pt-3 w-full border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span class="font-medium text-slate-300">Snooker & Sports Media</span>
+            <a href="https://instagram.com/zenx.hyd" target="_blank" class="hover:text-lime-400 transition flex items-center gap-1">
+              <span>@zenx.hyd</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hyderabad Venues Showcase -->
+  <section id="venues" class="py-20 bg-[#090d0b] border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-lime-400">Locations</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-heading mt-1">
+            Hyderabad Partner Arenas
+          </h2>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm max-w-md">
+          ZenX tournaments take place exclusively at Hyderabad's highest rated sports hubs with certified lighting and amenities.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Venue 1 -->
+        <div class="bg-[#0e1412] p-5 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-lime-400 uppercase tracking-wider">Gachibowli</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">FIFA Turf</span>
+          </div>
+          <h4 class="text-lg font-bold text-white">HotFut Arena</h4>
+          <p class="text-xs text-slate-400">Gachibowli Stadium Road, Hyderabad. Equipped with FIFA artificial turf, floodlights, dugouts, and player locker rooms.</p>
+        </div>
+
+        <!-- Venue 2 -->
+        <div class="bg-[#0e1412] p-5 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-lime-400 uppercase tracking-wider">Madhapur</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">Box Stadium</span>
+          </div>
+          <h4 class="text-lg font-bold text-white">Box Ground Madhapur</h4>
+          <p class="text-xs text-slate-400">Near Inorbit Mall, HITEC City. High-ceiling covered box cricket arena with boundary netting and digital scoreboard.</p>
+        </div>
+
+        <!-- Venue 3 -->
+        <div class="bg-[#0e1412] p-5 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-lime-400 uppercase tracking-wider">Kondapur</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">BWF Synthetic</span>
+          </div>
+          <h4 class="text-lg font-bold text-white">Gamepoint Arena</h4>
+          <p class="text-xs text-slate-400">Raghava Colony, Kondapur. Air-cooled badminton hall with multi-court wooden synthetic flooring and player lounge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Instagram Hub -->
+  <section id="contact" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Left: Instagram & Community Card -->
+        <div class="lg:col-span-5 space-y-6">
+          <span class="text-xs font-bold uppercase tracking-widest text-lime-400">Connect With Us</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white font-heading">
+            Join The Movement
+          </h2>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Follow our official Instagram for live match highlights, tournament fixture drops, and player spotlight reels.
+          </p>
+
+          <!-- Instagram Profile Card -->
+          <div class="bg-[#0e1412] rounded-2xl border border-slate-800 p-6 space-y-5">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-lime-400">
+                <img src="assets/images/zenx-logo.png" alt="ZenX Instagram" class="w-full h-full object-cover" />
+              </div>
+              <div>
+                <h4 class="text-lg font-bold text-white">zenx.hyd</h4>
+                <p class="text-xs text-lime-400 font-semibold">ZenX • Sports Event</p>
+                <div class="flex items-center gap-4 text-xs text-slate-400 mt-1">
+                  <span><strong class="text-white">38</strong> posts</span>
+                  <span><strong class="text-white">355</strong> followers</span>
+                  <span><strong class="text-white">4</strong> following</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-300 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+              Elite sports experience in Hyderabad 🏸⚽🏏🎱<br/>
+              Leagues • Tournaments • Events
+            </p>
+
+            <div class="flex gap-3">
+              <a 
+                href="https://instagram.com/zenx.hyd" 
+                target="_blank" 
+                class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition border border-slate-700">
+                <i data-lucide="instagram" class="w-4 h-4 text-pink-400"></i>
+                <span>Follow on Instagram</span>
+              </a>
+              <a 
+                href="https://wa.me/919999999999?text=Hi%20ZenX%20Team,%20I%20want%20to%20know%20more%20about%20upcoming%20tournaments!" 
+                target="_blank" 
+                class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Inquiry Form -->
+        <div class="lg:col-span-7 bg-[#0e1412] p-8 rounded-3xl border border-slate-800">
+          <h3 class="text-2xl font-bold text-white font-heading mb-2">Host an Event or Register Team</h3>
+          <p class="text-xs text-slate-400 mb-6">Have custom tournament inquiries or corporate sponsorship requests? Drop us a message.</p>
+
+          <form id="contact-form" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Your Name</label>
+                <input required type="text" placeholder="e.g. Rahul Sharma" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">WhatsApp / Phone</label>
+                <input required type="tel" placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Sport Interested In</label>
+                <select class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400">
+                  <option>Football (5v5 / 7v7)</option>
+                  <option>Box Cricket</option>
+                  <option>Badminton Masters</option>
+                  <option>Snooker & 8-Ball</option>
+                  <option>Corporate Sports Day</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 mb-1">Team or Company Name</label>
+                <input type="text" placeholder="e.g. Hyderabad Strikers" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-400 mb-1">Message or Query</label>
+              <textarea rows="3" placeholder="Tell us about your team or event requirements..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs tracking-wider uppercase transition neon-glow-btn shadow-[0_0_20px_rgba(163,230,53,0.3)]">
+              Send Inquiry
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black border-t border-slate-800/80 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full overflow-hidden border border-lime-400">
+          <img src="assets/images/zenx-logo.png" alt="ZenX" class="w-full h-full object-cover" />
+        </div>
+        <span class="text-sm font-bold text-white">ZenX Hyderabad &copy; 2026. All rights reserved.</span>
+      </div>
+      <div class="text-xs text-slate-400 flex items-center gap-4">
+        <span>Compete. Connect. Conquer.</span>
+        <span>•</span>
+        <a href="#tournaments" class="hover:text-lime-400 transition">Tournaments</a>
+        <span>•</span>
+        <a href="#contact" class="hover:text-lime-400 transition">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- STUDIO MODE FLOATING ACTION BAR (Visible only when unlocked) -->
+  <!-- ========================================================================= -->
+  <div 
+    id="studio-floating-bar" 
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#0d1210]/95 backdrop-blur-xl border-2 border-lime-400 px-5 py-3 rounded-2xl shadow-[0_0_30px_rgba(163,230,53,0.35)] flex items-center gap-3 translate-y-32 opacity-0 pointer-events-none transition-all duration-300 max-w-4xl w-[92vw] overflow-x-auto">
+    
+    <div class="flex items-center gap-2 flex-shrink-0 pr-3 border-r border-slate-700">
+      <span class="w-2.5 h-2.5 rounded-full bg-lime-400 animate-ping"></span>
+      <span class="text-xs font-mono font-bold text-lime-300">STUDIO MODE</span>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2 flex-1 justify-between flex-shrink-0">
+      <button 
+        id="studio-add-event-btn"
+        class="px-3 py-1.5 rounded-lg bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs flex items-center gap-1.5 transition whitespace-nowrap shadow-sm">
+        <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+        <span>Add Tournament</span>
+      </button>
+
+      <!-- NEW: Edit Website Frontend Text & Stats -->
+      <button 
+        id="studio-frontend-btn"
+        onclick="window.zenxStudio.openFrontendEditor()"
+        class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-lime-300 border border-lime-400/40 font-bold text-xs flex items-center gap-1.5 transition whitespace-nowrap">
+        <i data-lucide="layout-template" class="w-3.5 h-3.5 text-lime-400"></i>
+        <span>Edit Website Content</span>
+      </button>
+
+      <!-- Live Match / Score Ticker Toggle -->
+      <button 
+        id="studio-live-match-dock-btn"
+        onclick="window.zenxStudio.openLiveMatchModal()"
+        class="px-3 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 text-red-200 border border-red-500/50 font-bold text-xs flex items-center gap-1.5 transition whitespace-nowrap shadow-[0_0_10px_rgba(239,68,68,0.2)]">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+        <span>🔴 Live Match</span>
+      </button>
+
+      <!-- NEW: View Registrations Manager -->
+      <button 
+        id="studio-registrations-btn"
+        onclick="window.zenxStudio.openRegistrationsModal()"
+        class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition whitespace-nowrap">
+        <i data-lucide="users" class="w-3.5 h-3.5 text-lime-400"></i>
+        <span>Registrations</span>
+        <span id="studio-reg-count-badge" class="px-1.5 py-0.2 rounded-full bg-lime-400 text-black text-[10px] font-black">0</span>
+      </button>
+
+      <button 
+        id="studio-save-cloud-btn"
+        class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-lime-400 border border-lime-400/40 font-bold text-xs flex items-center gap-1.5 transition whitespace-nowrap">
+        <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+        <span>Save to Cloud</span>
+      </button>
+
+      <button 
+        id="studio-settings-btn"
+        class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-medium flex items-center gap-1.5 transition whitespace-nowrap">
+        <i data-lucide="key-round" class="w-3.5 h-3.5 text-lime-400"></i>
+        <span>Lock & Settings</span>
+      </button>
+
+      <button 
+        id="studio-export-btn"
+        class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-medium flex items-center gap-1.5 transition whitespace-nowrap" 
+        title="Export JSON Backup">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Export</span>
+      </button>
+
+      <label 
+        class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer whitespace-nowrap"
+        title="Import JSON Backup">
+        <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+        <span class="hidden sm:inline">Import</span>
+        <input type="file" id="studio-import-file-input" accept=".json" class="hidden" />
+      </label>
+
+      <button 
+        id="studio-lock-exit-btn"
+        class="px-3 py-1.5 rounded-lg bg-red-600/80 hover:bg-red-600 text-white font-bold text-xs flex items-center gap-1.5 transition whitespace-nowrap">
+        <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+        <span>Lock Studio</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: STUDIO LOCK (PIN CODE PROTECTION) -->
+  <!-- ========================================================================= -->
+  <div id="studio-lock-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-md bg-[#0d1210] border-2 border-lime-400/80 rounded-3xl p-6 shadow-[0_0_50px_rgba(163,230,53,0.3)] space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-lime-400/20 border border-lime-400 text-lime-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zM9 11V7a3 3 0 016 0v4"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white font-heading">Studio Lock</h3>
+            <p class="text-[11px] text-slate-400">Authorized Personnel Only</p>
+          </div>
+        </div>
+        <!-- Prominent Close Button -->
+        <button 
+          id="studio-lock-cancel-btn" 
+          type="button" 
+          onclick="window.zenxStudio.closeLockModal()"
+          aria-label="Close" 
+          class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition cursor-pointer">
+          <span>Close</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <form id="studio-lock-form" onsubmit="event.preventDefault(); window.zenxStudio.verifyPinAndUnlock(); return false;" class="space-y-4">
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Enter your confidential Studio Passkey to access live tournament management & website frontend editor.
+        </p>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">Passcode / PIN</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="studio-pin-input" 
+              placeholder="Enter your passkey" 
+              class="w-full pl-4 pr-11 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-lime-400 focus:ring-1 focus:ring-lime-400 transition tracking-widest font-mono"
+              autocomplete="current-password"
+              required
+              onkeydown="if(event.key==='Enter'){event.preventDefault(); window.zenxStudio.verifyPinAndUnlock();}"
+            />
+            <button 
+              type="button" 
+              onclick="window.zenxStudio.togglePinVisibility()" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-lime-400 transition p-1"
+              title="Toggle show/hide passkey">
+              <svg id="studio-pin-toggle-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+          </div>
+          <div id="studio-lock-error" class="text-xs text-red-400 mt-2 hidden font-medium"></div>
+        </div>
+
+        <!-- Action Buttons: Cancel and Unlock -->
+        <div class="flex items-center gap-3 pt-2">
+          <button 
+            id="studio-lock-bottom-cancel-btn" 
+            type="button" 
+            onclick="window.zenxStudio.closeLockModal()"
+            class="w-1/3 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs border border-slate-700 transition cursor-pointer">
+            Close
+          </button>
+          <button 
+            id="studio-unlock-btn" 
+            type="button"
+            onclick="window.zenxStudio.verifyPinAndUnlock()"
+            class="flex-1 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs tracking-wider uppercase transition neon-glow-btn flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(163,230,53,0.35)] cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+            <span>Unlock Studio</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: EVENT EDITOR (CREATE / EDIT TOURNAMENTS) -->
+  <!-- ========================================================================= -->
+  <div id="event-editor-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-content w-full max-w-2xl bg-[#0d1210] border border-lime-400/60 rounded-3xl p-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 id="event-editor-title" class="text-xl font-bold text-white font-heading">
+          Edit Tournament
+        </h3>
+        <button id="event-editor-cancel-btn" type="button" aria-label="Close" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition">
+          <span>Close</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <form id="event-editor-form" class="space-y-4">
+        <input type="hidden" id="event-id-input" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Tournament Title *</label>
+            <input required type="text" id="event-title-input" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Sport *</label>
+            <select id="event-sport-input" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400">
+              <option value="Football">Football</option>
+              <option value="Cricket">Cricket</option>
+              <option value="Badminton">Badminton</option>
+              <option value="Snooker">Snooker</option>
+              <option value="Pickleball">Pickleball / Padel</option>
+              <option value="Basketball">Basketball</option>
+              <option value="Other">Other Sport</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Tournament Date *</label>
+            <input required type="date" id="event-date-input" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Time Slot</label>
+            <input type="text" id="event-time-input" placeholder="e.g. 05:00 PM - 11:00 PM" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Category / Format Tag</label>
+            <input type="text" id="event-category-input" placeholder="e.g. 5v5 Turf Cup" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Venue Arena *</label>
+            <input required type="text" id="event-venue-input" placeholder="e.g. HotFut Arena" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Hyderabad Area / Location</label>
+            <input type="text" id="event-area-input" placeholder="e.g. Gachibowli, Hyderabad" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Entry Fee (₹)</label>
+            <input type="text" id="event-fee-input" placeholder="3,499" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Prize Pool (₹)</label>
+            <input type="text" id="event-prize-input" placeholder="45,000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">1st Prize</label>
+            <input type="text" id="event-first-prize-input" placeholder="30,000 + Trophy" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Runner Up Prize</label>
+            <input type="text" id="event-runner-prize-input" placeholder="15,000 + Medals" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Total Team Slots</label>
+            <input type="number" id="event-slots-total-input" min="2" max="128" value="16" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Slots Booked</label>
+            <input type="number" id="event-slots-filled-input" min="0" max="128" value="0" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Registration Status</label>
+            <select id="event-status-input" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400">
+              <option value="open">Open for Registration</option>
+              <option value="filling_fast">Filling Fast</option>
+              <option value="sold_out">Sold Out</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Banner Image URL</label>
+          <input type="url" id="event-banner-input" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Tournament Rules & Format</label>
+          <input type="text" id="event-format-input" placeholder="e.g. Group Stage + Knockouts (12 min halves)" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Description</label>
+          <textarea rows="3" id="event-desc-input" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Perks & Extras (comma separated)</label>
+          <input type="text" id="event-perks-input" placeholder="Official Jerseys, Physio Support, Energy Drinks" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <button type="button" onclick="document.getElementById('event-editor-modal').classList.remove('active')" class="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+            Cancel
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-extrabold bg-lime-400 hover:bg-lime-300 text-black uppercase tracking-wider neon-glow-btn">
+            Save & Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: STUDIO CLOUD & LOCK SETTINGS -->
+  <!-- ========================================================================= -->
+  <div id="studio-settings-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-lg bg-[#0d1210] border border-lime-400/60 rounded-3xl p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-xl font-bold text-white font-heading">
+          Studio Lock & Cloud Settings
+        </h3>
+        <button onclick="document.getElementById('studio-settings-modal').classList.remove('active')" type="button" aria-label="Close" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition">
+          <span>Close</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Change Lock PIN Section -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+          <div class="flex items-center gap-2 text-lime-400 font-bold text-xs uppercase tracking-wider">
+            <i data-lucide="key" class="w-4 h-4"></i>
+            <span>Set Custom Studio Lock PIN</span>
+          </div>
+          <p class="text-xs text-slate-400">
+            Current Lock Code: <span id="settings-current-pin-display" class="font-mono text-lime-300 font-semibold">zenx2026</span>
+          </p>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">New Lock PIN / Password</label>
+            <input type="text" id="settings-new-pin" placeholder="Enter new secret lock code" class="w-full px-3.5 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400 font-mono" />
+          </div>
+        </div>
+
+        <!-- Supabase Cloud Setup (Optional) -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+          <div class="flex items-center gap-2 text-lime-400 font-bold text-xs uppercase tracking-wider">
+            <i data-lucide="cloud" class="w-4 h-4"></i>
+            <span>Remote Cloud Sync (Optional)</span>
+          </div>
+          <p class="text-[11px] text-slate-400">
+            By default, changes save directly to your browser storage and local data files. You can also link a Supabase or REST endpoint for global cross-device sync.
+          </p>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Supabase URL</label>
+            <input type="url" id="settings-supabase-url" placeholder="https://xyz.supabase.co" class="w-full px-3.5 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Supabase Anon Key</label>
+            <input type="password" id="settings-supabase-key" placeholder="eyJhbGciOi..." class="w-full px-3.5 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="document.getElementById('studio-settings-modal').classList.remove('active')" class="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+          Cancel
+        </button>
+        <button onclick="window.zenxStudio.saveSettings()" class="px-6 py-2.5 rounded-xl text-xs font-extrabold bg-lime-400 hover:bg-lime-300 text-black uppercase tracking-wider neon-glow-btn">
+          Save Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: FRONTEND WEBSITE CONTENT EDITOR -->
+  <!-- ========================================================================= -->
+  <div id="frontend-editor-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-content w-full max-w-2xl bg-[#0d1210] border-2 border-lime-400/80 rounded-3xl p-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-lime-400/20 border border-lime-400 text-lime-400 flex items-center justify-center">
+            <i data-lucide="layout-template" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white font-heading">Edit Website Frontend</h3>
+            <p class="text-[11px] text-slate-400">Live inline updates for Hero, Announcements & Stats</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('frontend-editor-modal').classList.remove('active')" type="button" aria-label="Close" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition">
+          <span>Close</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <form id="frontend-editor-form" onsubmit="event.preventDefault(); window.zenxStudio.saveFrontendContent();" class="space-y-4">
+        <!-- Marquee Ticker Text -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Top Announcement Marquee</label>
+          <input type="text" id="fe-marquee-input" placeholder="⚡ STAY CONNECTED. BIG THINGS ARE COMING..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400 font-medium" />
+        </div>
+
+        <!-- Hero Headline & Movement Tagline -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Hero Eyebrow Text</label>
+            <input type="text" id="fe-eyebrow-input" placeholder="MORE THAN TOURNAMENTS." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Brand Tagline</label>
+            <input type="text" id="fe-tagline-input" placeholder="COMPETE. CONNECT. CONQUER." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Hero Description Paragraph</label>
+          <textarea rows="2" id="fe-hero-desc-input" placeholder="High-stakes sports leagues, electronic scoring, corporate battles..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400"></textarea>
+        </div>
+
+        <!-- Stats Numbers -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+          <span class="text-xs font-bold text-lime-400 uppercase tracking-wider block">Live Stats Numbers</span>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Active Events</label>
+              <input type="text" id="fe-stat-events-input" placeholder="5+" class="w-full px-3 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:border-lime-400 text-center font-bold font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Athletes & Teams</label>
+              <input type="text" id="fe-stat-athletes-input" placeholder="355+" class="w-full px-3 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:border-lime-400 text-center font-bold font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Prize Pool</label>
+              <input type="text" id="fe-stat-prize-input" placeholder="₹1.5L+" class="w-full px-3 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:border-lime-400 text-center font-bold font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Partner Venues</label>
+              <input type="text" id="fe-stat-venues-input" placeholder="12+" class="w-full px-3 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:border-lime-400 text-center font-bold font-mono" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Email / Phone -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Official WhatsApp / Phone</label>
+            <input type="text" id="fe-phone-input" placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Official Instagram Handle</label>
+            <input type="text" id="fe-instagram-input" placeholder="@zenx.hyd" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <button type="button" onclick="document.getElementById('frontend-editor-modal').classList.remove('active')" class="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+            Cancel
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-extrabold bg-lime-400 hover:bg-lime-300 text-black uppercase tracking-wider neon-glow-btn">
+            Apply Changes to Frontend
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: TOURNAMENT REGISTRATIONS MANAGER -->
+  <!-- ========================================================================= -->
+  <div id="registrations-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="modal-content w-full max-w-4xl bg-[#0d1210] border-2 border-lime-400/80 rounded-3xl p-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-lime-400/20 border border-lime-400 text-lime-400 flex items-center justify-center">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white font-heading">Team Registrations Manager</h3>
+            <p class="text-[11px] text-slate-400">View and manage teams that registered through the frontend</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="window.zenxStudio.exportRegistrationsCSV()" type="button" class="px-3 py-1.5 rounded-xl bg-lime-400/20 hover:bg-lime-400/30 text-lime-300 border border-lime-400/40 font-bold text-xs flex items-center gap-1.5 transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Export CSV</span>
+          </button>
+          <button onclick="document.getElementById('registrations-modal').classList.remove('active')" type="button" aria-label="Close" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition">
+            <span>Close</span>
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Registrations Table / List Container -->
+      <div id="registrations-list-container" class="space-y-3 min-h-[250px]">
+        <!-- Populated via js/studio-mode.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: TEAM REGISTRATION FORM -->
+  <!-- ========================================================================= -->
+  <div id="registration-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-lg bg-[#0d1210] border border-lime-400/60 rounded-3xl p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="text-xl font-bold text-white font-heading">Register Your Team</h3>
+          <p id="reg-event-title" class="text-xs font-bold text-lime-400 mt-0.5"></p>
+        </div>
+        <button id="reg-cancel-btn" type="button" aria-label="Close" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition">
+          <span>Close</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
+        <span id="reg-event-meta" class="text-slate-300 font-medium"></span>
+        <span id="reg-event-fee" class="text-lime-400 font-extrabold"></span>
+      </div>
+
+      <form id="registration-form" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Team Name *</label>
+            <input required type="text" id="reg-team-name" placeholder="e.g. Hyderabad Strikers" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Captain Name *</label>
+            <input required type="text" id="reg-captain-name" placeholder="e.g. Sameer Khan" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">WhatsApp / Phone *</label>
+            <input required type="tel" id="reg-phone" placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Number of Squad Players</label>
+            <input type="number" id="reg-players-count" min="1" max="25" value="7" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Additional Notes / Jersey Sizes</label>
+          <textarea rows="2" id="reg-notes" placeholder="Optional comments, jersey preferences, or past achievements..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-lime-400"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs tracking-wider uppercase transition neon-glow-btn flex items-center justify-center gap-2">
+          <span>Confirm Team Registration</span>
+          <i data-lucide="check" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: LIVE MATCH SCOREBOARD MANAGER (Studio Mode) -->
+  <!-- ========================================================================= -->
+  <div id="live-match-modal" class="modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="modal-content w-full max-w-lg bg-[#0d1210] border-2 border-red-500/80 rounded-3xl p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-red-600/20 border border-red-500 text-red-400 flex items-center justify-center">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-white font-heading">Live Match Scoreboard</h3>
+            <p class="text-[11px] text-slate-400">Broadcast live scores and stream link on your website</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('live-match-modal').classList.remove('active')" type="button" aria-label="Close" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition">
+          <span>Close</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <form id="live-match-form" onsubmit="event.preventDefault(); window.zenxStudio.saveLiveMatch();" class="space-y-4">
+        <!-- Live Ticker Toggle -->
+        <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold text-white block">Enable Live Match Ticker</span>
+            <span class="text-[11px] text-slate-400">Displays real-time ticker bar on top of homepage</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="live-match-enabled" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Match Headline / Tournament *</label>
+          <input required type="text" id="live-match-input-title" placeholder="e.g. 🏏 ZenX Box Cricket: Strikers vs Warriors" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Current Score / Overs / Status *</label>
+          <input required type="text" id="live-match-input-score" placeholder="e.g. 54/2 (4.3 ov) • Need 34 from 21 balls" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-lime-400 font-mono font-bold focus:outline-none focus:border-red-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Live Scorecard / Stream Link</label>
+          <input type="url" id="live-match-input-link" placeholder="https://cricheroes.in/... or YouTube stream link" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-500" />
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <button type="button" onclick="document.getElementById('live-match-modal').classList.remove('active')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+            Cancel
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-extrabold bg-red-600 hover:bg-red-500 text-white uppercase tracking-wider transition shadow-[0_0_15px_rgba(239,68,68,0.5)] flex items-center gap-1.5">
+            <span>Broadcast Live Score</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/cloud-storage.js"></script>
+  <script src="js/studio-mode.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
