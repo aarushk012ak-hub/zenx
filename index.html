@@ -182,6 +182,7 @@
           <img 
             src="assets/images/zenx-logo.png" 
             alt="ZenX Hyderabad" 
+            id="site-logo"
             class="w-full h-full object-contain p-1" 
           />
         </div>
@@ -189,15 +190,15 @@
 
       <!-- Centered Hero Copy -->
       <div class="space-y-4 max-w-3xl mt-6">
-        <p class="text-xs sm:text-sm font-extrabold tracking-[0.3em] text-slate-400 uppercase font-mono">
+        <p class="text-xs sm:text-sm font-extrabold tracking-[0.3em] text-slate-400 uppercase font-mono" data-fe="eyebrow">
           More Than Tournaments.
         </p>
         <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.05] font-heading">
           A <span class="neon-text-gradient underline decoration-lime-400/40">MOVEMENT.</span>
         </h1>
-        <p class="text-base sm:text-xl font-medium text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        <p class="text-base sm:text-xl font-medium text-slate-300 max-w-2xl mx-auto leading-relaxed" data-fe="hero-desc">
           High-stakes sports leagues, electronic scoring, corporate battles, and floodlit tournaments across Hyderabad.
-          <span class="text-lime-300 font-bold block mt-1 tracking-wide">COMPETE. CONNECT. CONQUER.</span>
+          <span class="text-lime-300 font-bold block mt-1 tracking-wide" data-fe="tagline">COMPETE. CONNECT. CONQUER.</span>
         </p>
       </div>
 
@@ -225,7 +226,7 @@
           <div class="text-xs text-slate-400 font-medium mt-0.5">Active Tournaments</div>
         </div>
         <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
-          <div class="text-2xl sm:text-3xl font-black text-lime-400 font-heading">355+</div>
+          <div id="stat-athletes" class="text-2xl sm:text-3xl font-black text-lime-400 font-heading">355+</div>
           <div class="text-xs text-slate-400 font-medium mt-0.5">Athletes & Teams</div>
         </div>
         <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
@@ -233,9 +234,14 @@
           <div class="text-xs text-slate-400 font-medium mt-0.5">Cash Prize Pool</div>
         </div>
         <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800 hover:border-lime-400/40 transition">
-          <div class="text-2xl sm:text-3xl font-black text-lime-400 font-heading">12+</div>
+          <div id="stat-venues" class="text-2xl sm:text-3xl font-black text-lime-400 font-heading">12+</div>
           <div class="text-xs text-slate-400 font-medium mt-0.5">Hyderabad Venues</div>
         </div>
+      </div>
+
+      <!-- Optional Hero Poster/Banner (visible when set via Studio Editor) -->
+      <div id="hero-poster-container" class="mt-8 w-full max-w-4xl hidden">
+        <img id="hero-poster-img" src="" alt="ZenX Banner" class="w-full rounded-2xl border border-slate-800 shadow-2xl object-cover max-h-[400px]" />
       </div>
 
     </div>
@@ -1203,6 +1209,25 @@
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Official Instagram Handle</label>
             <input type="text" id="fe-instagram-input" placeholder="@zenx.hyd" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-lime-400" />
+          </div>
+        </div>
+
+        <!-- Images: Logo & Poster -->
+        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+          <span class="text-xs font-bold text-lime-400 uppercase tracking-wider block">Images & Branding</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Logo Image URL</label>
+              <input type="text" id="fe-logo-url-input" placeholder="https://... or leave blank" class="w-full px-3 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:border-lime-400" />
+              <label class="block text-[11px] text-slate-500 mt-1.5 mb-0.5">Or upload a file:</label>
+              <input type="file" id="fe-logo-file-input" accept="image/*" class="w-full text-[11px] text-slate-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-lime-400/20 file:text-lime-300 hover:file:bg-lime-400/30" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-400 mb-1">Poster / Banner Image URL</label>
+              <input type="text" id="fe-poster-url-input" placeholder="https://... or leave blank" class="w-full px-3 py-2 rounded-xl bg-black border border-slate-700 text-xs text-white focus:border-lime-400" />
+              <label class="block text-[11px] text-slate-500 mt-1.5 mb-0.5">Or upload a file:</label>
+              <input type="file" id="fe-poster-file-input" accept="image/*" class="w-full text-[11px] text-slate-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-lime-400/20 file:text-lime-300 hover:file:bg-lime-400/30" />
+            </div>
           </div>
         </div>
 

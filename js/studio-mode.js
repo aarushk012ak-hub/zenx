@@ -19,9 +19,19 @@ class StudioModeController {
 
   init() {
     this.bindKeyboardShortcut();
-    this.bindUiEvents();
-    if (sessionStorage.getItem('zenx_studio_active') === 'true') {
-      setTimeout(() => this.unlockStudio(false), 200);
+    // Defer UI binding until DOM is fully ready so window.zenxStudio is set first
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.bindUiEvents();
+        if (sessionStorage.getItem('zenx_studio_active') === 'true') {
+          setTimeout(() => this.unlockStudio(false), 200);
+        }
+      });
+    } else {
+      this.bindUiEvents();
+      if (sessionStorage.getItem('zenx_studio_active') === 'true') {
+        setTimeout(() => this.unlockStudio(false), 200);
+      }
     }
   }
 
@@ -576,6 +586,12 @@ class StudioModeController {
     document.getElementById('fe-phone-input').value = data.phone || '+91 98765 43210';
     document.getElementById('fe-instagram-input').value = data.instagram || '@zenx.hyd';
 
+    // Image fields
+    const logoEl = document.getElementById('site-logo');
+    document.getElementById('fe-logo-url-input').value = data.logoUrl || (logoEl ? logoEl.src : '');
+    const posterEl = document.getElementById('hero-poster-img');
+    document.getElementById('fe-poster-url-input').value = data.posterUrl || (posterEl ? posterEl.src : '');
+
     modal.classList.add('active');
   }
 
@@ -591,29 +607,103 @@ class StudioModeController {
       statVenues: document.getElementById('fe-stat-venues-input')?.value.trim(),
       phone: document.getElementById('fe-phone-input')?.value.trim(),
       instagram: document.getElementById('fe-instagram-input')?.value.trim(),
+      logoUrl: document.getElementById('fe-logo-url-input')?.value.trim(),
+      posterUrl: document.getElementById('fe-poster-url-input')?.value.trim(),
     };
 
-    localStorage.setItem('zenx_frontend_content', JSON.stringify(content));
-    this.applyFrontendContent(content);
+    // Check for file uploads (convert to base64 dataURL)
+    const logoFile = document.getElementById('fe-logo-file-input')?.files[0];
+    const posterFile = document.getElementById('fe-poster-file-input')?.files[0];
 
-    document.getElementById('frontend-editor-modal').classList.remove('active');
-    window.zenxApp.showToast('✨ Website frontend content updated successfully!', 'success');
+    const processFile = (file) => new Promise((resolve) => {
+      if (!file) { resolve(null); return; }
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+
+    Promise.all([processFile(logoFile), processFile(posterFile)]).then(([logoData, posterData]) => {
+      if (logoData) content.logoUrl = logoData;
+      if (posterData) content.posterUrl = posterData;
+
+      localStorage.setItem('zenx_frontend_content', JSON.stringify(content));
+      this.applyFrontendContent(content);
+
+      document.getElementById('frontend-editor-modal').classList.remove('active');
+      if (window.zenxApp && window.zenxApp.showToast) {
+        window.zenxApp.showToast('✨ Website frontend content updated successfully!', 'success');
+      }
+    });
   }
 
   applyFrontendContent(data) {
     if (!data) return;
+    // Marquee
     if (data.marquee) {
       document.querySelectorAll('.animate-marquee span').forEach((span, i) => {
         if (i % 2 === 0) span.textContent = data.marquee;
       });
     }
+    // Eyebrow text
+    if (data.eyebrow) {
+      const el = document.querySelector('[data-fe="eyebrow"]') || document.querySelector('.hero-eyebrow');
+      if (el) el.textContent = data.eyebrow;
+    }
+    // Tagline
+    if (data.tagline) {
+      const el = document.querySelector('[data-fe="tagline"]') || document.querySelector('.hero-tagline');
+      if (el) el.textContent = data.tagline;
+    }
+    // Hero description
+    if (data.heroDesc) {
+      const el = document.querySelector('[data-fe="hero-desc"]') || document.querySelector('.hero-description');
+      if (el) el.textContent = data.heroDesc;
+    }
+    // Stats
     if (data.statEvents) {
       const el = document.getElementById('stat-active-tournaments');
       if (el) el.textContent = data.statEvents;
     }
+    if (data.statAthletes) {
+      const el = document.getElementById('stat-athletes');
+      if (el) el.textContent = data.statAthletes;
+    }
     if (data.statPrize) {
       const el = document.getElementById('stat-total-prize');
       if (el) el.textContent = data.statPrize;
+    }
+    if (data.statVenues) {
+      const el = document.getElementById('stat-venues');
+      if (el) el.textContent = data.statVenues;
+    }
+    // Logo image
+    if (data.logoUrl) {
+      const el = document.getElementById('site-logo');
+      if (el) el.src = data.logoUrl;
+    }
+    // Poster / banner image
+    if (data.posterUrl) {
+      const el = document.getElementById('hero-poster-img');
+      const container = document.getElementById('hero-poster-container');
+      if (el) el.src = data.posterUrl;
+      if (container) container.classList.remove('hidden');
+    }
+    // Phone (update WhatsApp link)
+    if (data.phone) {
+      const waLinks = document.querySelectorAll('a[href*="wa.me"]');
+      const clean = data.phone.replace(/[^0-9]/g, '');
+      const num = clean.startsWith('91') ? clean : '91' + clean;
+      waLinks.forEach(a => {
+        const oldHref = a.href;
+        const textParam = oldHref.includes('?text=') ? oldHref.substring(oldHref.indexOf('?text=')) : '';
+        a.href = 'https://wa.me/' + num + textParam;
+      });
+    }
+    // Instagram
+    if (data.instagram) {
+      const handle = data.instagram.replace('@', '');
+      const igLinks = document.querySelectorAll('a[href*="instagram.com"]');
+      igLinks.forEach(a => { a.href = 'https://instagram.com/' + handle; });
     }
   }
 
@@ -801,7 +891,9 @@ class StudioModeController {
     }
 
     document.getElementById('live-match-modal')?.classList.remove('active');
-    window.zenxApp.showToast(enabled ? '🔴 Live score broadcasted successfully!' : 'Live ticker hidden.', 'success');
+    if (window.zenxApp && window.zenxApp.showToast) {
+      window.zenxApp.showToast(enabled ? '🔴 Live score broadcasted successfully!' : 'Live ticker hidden.', 'success');
+    }
   }
 }
 
